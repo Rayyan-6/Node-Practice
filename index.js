@@ -10,6 +10,7 @@ import bodyParser from 'body-parser';
 import expressValidator from 'express-validator';
 
 import { connectDb } from './Database/db.js';
+import rateLimiter from './middlewares/rateLimiter.js';
 
 dotenv.config()
 
@@ -17,6 +18,8 @@ const app = express();
 const port = process.env.PORT;
 
 app.use(bodyParser.json())
+
+app.use(rateLimiter)
 // app.use(expressValidator)
 
 app.use('/', posts);
