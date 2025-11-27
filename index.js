@@ -1,7 +1,3 @@
-// const express = require('express');
-// const posts = require('./routes/post.js');
-// const dotenv = require('dotenv')
-// const mongoose = require('mongoose')
 import express from 'express';
 import posts from './routes/post.js';
 import dotenv from 'dotenv';
