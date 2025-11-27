@@ -25,6 +25,13 @@ const userSchema = new mongoose.Schema({
     min: [13, 'Age must be at least 13'],
     max: [120, 'Age cannot exceed 120']
   },
+
+  role: {
+    
+    enum:['admin', 'user', 'moderator'],
+    default: 'user'
+  },
+
   isActive: {
     type: Boolean,
     default: true
