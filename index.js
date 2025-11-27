@@ -8,6 +8,7 @@ import dotenv from 'dotenv';
 import mongoose from 'mongoose';
 import bodyParser from 'body-parser';
 import expressValidator from 'express-validator';
+import userRoutes from './routes/user.js'
 
 import { connectDb } from './Database/db.js';
 import rateLimiter from './middlewares/rateLimiter.js';
@@ -23,6 +24,7 @@ app.use(rateLimiter)
 // app.use(expressValidator)
 
 app.use('/', posts);
+app.use('/user',userRoutes)
 
 connectDb()
 
