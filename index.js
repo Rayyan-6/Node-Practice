@@ -30,8 +30,11 @@ app.use('/dashboard', dashboardRoutes);
 // )
 
 
+let server;
+
+
 connectDb().then(() => {
-  app.listen(port, () => {
+  server = app.listen(port, () => {
     console.log(`Server running at http://localhost:${port}`);
   });
 }).catch((err) => {
@@ -44,14 +47,14 @@ const gracefulShutdown = async (signal) => {
   console.log(`\nReceived ${signal}. Closing resources...`);
 
   try {
-    server.close(() => {
-      console.log('HTTP server closed');
-    });
+    if (server) {
+      server.close(() => {
+        console.log('HTTP server closed');
+      });
+    }
 
     await mongoose.connection.close();
     console.log('MongoDB connection closed');
-
-  
 
     console.log('Shutdown complete. Exiting process.');
     process.exit(0);
@@ -64,6 +67,6 @@ const gracefulShutdown = async (signal) => {
 
 process.on('SIGINT', () => gracefulShutdown('SIGINT'));
 process.on('SIGTERM', () => gracefulShutdown('SIGTERM'));
-
+  
 
 
