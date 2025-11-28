@@ -10,7 +10,6 @@ export const requireRole = (...roles) => {
         if (!roles.includes(req.user.role.toLowerCase())) {
             return res.status(403).json({ message: "Access denied. Role not allowed." });
         }
-
         next();
     };
 };
