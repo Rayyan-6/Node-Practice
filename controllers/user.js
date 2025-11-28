@@ -27,8 +27,6 @@ export const validateSignin = [
     body("password").notEmpty().withMessage("Password is required")
 ];
 
-
-
 export const signup = async (req, res) => {
 
     const errors = validationResult(req);
@@ -39,7 +37,7 @@ export const signup = async (req, res) => {
         });
     }
 
-    const { name, email, password, age } = req.body;
+    const { name, email, password, age, role } = req.body;
 
     try {
         // Check if user already exists
@@ -58,9 +56,10 @@ export const signup = async (req, res) => {
         // Create new user
         const user = new User({
             name,
-            email,
+            email, 
             password: hashedPassword,
             age,
+            role
         });
 
         const savedUser = await user.save();
@@ -128,3 +127,25 @@ export const signin = async (req, res) => {
         res.status(500).json({ success: false, message: "Server Error" });
     }
 };
+
+export const getAllUsers= async (req,res)=>{
+
+    try{
+          const users = await User.find().select("-password");
+          res.status(200).json({
+            success: true,
+            count: users.length,
+            users: users
+          })
+    }
+    catch(error){
+        console.log("GetAllUsers Error:", error);
+        res.status(500).json({
+            success: false,
+            message: "Server Error"
+        });
+    }
+  
+    
+
+}

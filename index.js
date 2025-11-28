@@ -8,6 +8,7 @@ import userRoutes from './routes/user.js'
 
 import { connectDb } from './Database/db.js';
 import rateLimiter from './middlewares/rateLimiter.js';
+import dashboardRoutes from './routes/dashboard.js'
 
 dotenv.config()
 
@@ -20,7 +21,8 @@ app.use(rateLimiter)
 // app.use(expressValidator)
 
 app.use('/post', posts);
-app.use('/user',userRoutes)
+app.use('/user', userRoutes);
+app.use('/dashboard', dashboardRoutes);
 
 connectDb().then(
 app.listen(port, () => {
