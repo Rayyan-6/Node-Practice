@@ -19,13 +19,15 @@ app.use(bodyParser.json())
 app.use(rateLimiter)
 // app.use(expressValidator)
 
-app.use('/', posts);
+app.use('/post', posts);
 app.use('/user',userRoutes)
 
-connectDb()
-
+connectDb().then(
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
-});
+})
+
+)
+
 
 
