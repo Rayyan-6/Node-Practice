@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/Rayyan-6/Node-Practice#readme",
   "dependencies": {
+    "@redis/json": "^5.10.0",
     "@upstash/ratelimit": "^2.0.5",
     "@upstash/redis": "^1.34.9",
     "bcryptjs": "^3.0.3",
@@ -30,7 +31,8 @@
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^9.0.0",
     "multer": "^2.0.2",
-    "os": "^0.1.2"
+    "os": "^0.1.2",
+    "redis": "^5.10.0"
   },
   "devDependencies": {
     "browser-sync": "^3.0.4",
