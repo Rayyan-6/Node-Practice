@@ -9,15 +9,28 @@ import userRoutes from './routes/user.js'
 import { connectDb } from './Database/db.js';
 import rateLimiter from './middlewares/rateLimiter.js';
 import dashboardRoutes from './routes/dashboard.js'
+import { initRedisClient } from './controllers/redis.js';
+import helmet from 'helmet';
+
+import rateLimit from 'express-rate-limit';
 
 dotenv.config()
 
 const app = express();
 const port = process.env.PORT;
 
+const limiter = rateLimit({
+  windowMs: 1000*60,
+  max: 5,
+  message: "Too many requests from this IP, please try again later"
+
+})
+
 app.use(bodyParser.json())
 
 app.use(rateLimiter)
+app.use(helmet())
+app.use(limiter)
 
 app.use('/post', posts);
 app.use('/user', userRoutes);
@@ -32,6 +45,7 @@ app.use('/dashboard', dashboardRoutes);
 
 let server;
 
+await initRedisClient();
 
 connectDb().then(() => {
   server = app.listen(port, () => {

@@ -1,18 +1,52 @@
 import Post from '../models/post.js'
 import { body, validationResult } from 'express-validator';
+import { setValue, getValue } from './redis.js';
 
 
 
+// export const getPosts= async (req,res)=>{
+//     const posts = Post.find().select("_id title content")
+//     .then((posts)=>{
+//         res.status(200).json({
+//             posts:posts
+//         })
+//     })
+//     .catch(err=>console.log(err ))
+// }
 
-export const getPosts=(req,res)=>{
-    const posts = Post.find().select("_id title content")
-    .then((posts)=>{
-        res.status(200).json({
-            posts:posts
-        })
-    })
-    .catch(err=>console.log(err ))
-}
+
+
+export const getPosts = async (req, res) => {
+    try {
+        const cacheKey = "all_posts";
+
+        // 1️⃣ Check Redis cache
+        const cachedPosts = await getValue(cacheKey);
+
+        if (cachedPosts) {
+            return res.status(200).json({
+                source: "redis",
+                posts: cachedPosts
+            });
+        }
+
+        // 2️⃣ If not cached → fetch from Mongo
+        const posts = await Post.find().select("_id title content");
+
+        // 3️⃣ Save Mongo result to Redis
+        await setValue(cacheKey, posts);
+
+        // 4️⃣ Return response
+        return res.status(200).json({
+            source: "mongo",
+            posts: posts
+        });
+
+    } catch (err) {
+        console.error("Error in getPosts:", err);
+        return res.status(500).json({ error: "Internal Server Error" });
+    }
+};
 
 
 
