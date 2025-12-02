@@ -30,7 +30,7 @@ app.use(bodyParser.json())
 
 app.use(rateLimiter)
 app.use(helmet())
-app.use(limiter)
+// app.use(limiter)
 
 app.use('/post', posts);
 app.use('/user', userRoutes);
