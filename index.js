@@ -16,7 +16,7 @@ import rateLimit from 'express-rate-limit';
 
 dotenv.config()
 
-const app = express();
+export const app = express();
 const port = process.env.PORT;
 
 const limiter = rateLimit({

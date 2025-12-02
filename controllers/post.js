@@ -4,18 +4,6 @@ import { setValue, getValue } from './redis.js';
 
 
 
-// export const getPosts= async (req,res)=>{
-//     const posts = Post.find().select("_id title content")
-//     .then((posts)=>{
-//         res.status(200).json({
-//             posts:posts
-//         })
-//     })
-//     .catch(err=>console.log(err ))
-// }
-
-
-
 export const getPosts = async (req, res) => {
     try {
         const cacheKey = "all_posts";
@@ -47,6 +35,34 @@ export const getPosts = async (req, res) => {
         return res.status(500).json({ error: "Internal Server Error" });
     }
 };
+
+export const getById = async (req,res)=>{
+    try {
+        const postId = req.params.id;
+        const post = await Post.findById(postId).select("_id title content");
+
+
+        if (!post) {
+            return res.status(404).json({
+                success: false,
+                message: "Post not found"
+            });
+        }
+
+        return res.status(200).json({
+            success: true,
+            post
+        });
+        
+    } catch (error) {
+        
+        console.error("Error in getById:", error);
+        return res.status(500).json({
+            success: false,
+            message: "Server error"
+        });
+    }
+}
 
 
 
