@@ -147,7 +147,7 @@ const config = {
   // snapshotSerializers: [],
 
   // The test environment that will be used for testing
-  // testEnvironment: "jest-environment-node",
+  testEnvironment: "node",
 
   // Options that will be passed to the testEnvironment
   // testEnvironmentOptions: {},
@@ -177,7 +177,7 @@ const config = {
 
   // A map from regular expressions to paths to transformers
   transform: {
-    "^.+\\.m?js$":"babel-jest"
+    // "^.+\\.m?js$":"babel-jest"
   },
 
   // An array of regexp pattern strings that are matched against all source file paths, matched files will skip transformation
@@ -199,4 +199,4 @@ const config = {
   // watchman: true,
 };
 
-module.exports = config;
+export default config;

@@ -1,5 +1,5 @@
-const express = require("express");
-const { signup, signin, validateSignup, validateSignin, getAllUsers } = require("../controllers/user.js");
+import express from 'express'
+import  { signup, signin, validateSignup, validateSignin, getAllUsers }  from "../controllers/user.js";
 
 const router = express.Router();
 
@@ -8,4 +8,4 @@ router.post("/signup", validateSignup, signup);
 
 router.post("/signin", validateSignin, signin);
 
-module.exports = router;
+export default router;
